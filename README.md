@@ -2,6 +2,12 @@
 
 Bookmark the directory path.
 
+## install
+
+```bash
+$ cargo install --path .
+```
+
 ## Usage
 
 ```bash
@@ -18,7 +24,6 @@ ARGS:
 SUBCOMMANDS:
     add       add directory to bookmark
     help      Prints this message or the help of the given subcommand(s)
-    list      show bookmark list
     remove    remove bookmark
 ```
 
@@ -29,18 +34,14 @@ SUBCOMMANDS:
 ## for fish shell
 
 ```bash
-function bm-bookmark
-  switch $argv[1]
-    case list
-      bookmark $argv
-    case add
-      bookmark $argv
-    case remove
-      bookmark $argv
-    case '*'
-      cd (bookmark $argv)
+function bm
+  set length (count $argv)
+  if test $length -eq 0
+    bookmark
+  else if test $length -eq 1; and  test $arvg[1] != "-h" or test $argv[1] != "help"
+    cd (bookmark $argv)
+  else
+    bookmark $argv
   end
 end
-
-alias bm bm-bookmark
 ```

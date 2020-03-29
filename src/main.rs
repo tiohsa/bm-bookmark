@@ -14,7 +14,6 @@ fn main() {
                 .help("get bookmark by name.")
                 .index(1),
         )
-        .subcommand(SubCommand::with_name("list").about("show bookmark list"))
         .subcommand(
             SubCommand::with_name("add")
                 .about("add directory to bookmark")
@@ -37,8 +36,6 @@ fn main() {
 fn run(matches: &ArgMatches) -> Result<(), Error> {
     if let Some(name) = matches.value_of("NAME") {
         Process::change_directory(name)?;
-    } else if let Some(_) = matches.subcommand_matches("list") {
-        Process::show_list()?;
     } else if let Some(sub_matches) = matches.subcommand_matches("add") {
         let name = sub_matches.value_of("NAME").unwrap();
         let path = sub_matches.value_of("PATH").unwrap();
@@ -46,6 +43,8 @@ fn run(matches: &ArgMatches) -> Result<(), Error> {
     } else if let Some(sub_matches) = matches.subcommand_matches("remove") {
         let name = sub_matches.value_of("NAME").unwrap();
         Process::remove_bookmark(name)?;
+    } else {
+        Process::show_list()?;
     }
     Ok(())
 }

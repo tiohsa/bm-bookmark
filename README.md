@@ -1,4 +1,4 @@
-# Bookmark
+# Bookmark &emsp; ![Rust](https://github.com/tiohsa/bm-bookmark/workflows/Rust/badge.svg)
 
 Bookmark the directory path.
 

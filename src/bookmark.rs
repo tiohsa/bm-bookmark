@@ -27,10 +27,9 @@ impl Manager {
     }
 
     pub fn add_bookmark(&self, name: &str, path: &str) -> Result<(), Error> {
-        let directory_path = Path::new(&path);
+        let directory_path = Path::new(path);
         let abs_path = directory_path.canonicalize().unwrap();
-        let os_path = abs_path.as_os_str().to_str().unwrap();
-        let bookmark = Bookmark::new(name, os_path);
+        let bookmark = Bookmark::new(name, abs_path.to_str().unwrap());
         let mut bookmarks = self.read_bookmarks()?;
         if let Some(same_bookmark) = bookmarks.iter().find(|v| v.name == bookmark.name) {
             Err(format_err!(

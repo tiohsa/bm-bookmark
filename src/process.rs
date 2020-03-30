@@ -14,8 +14,7 @@ impl Process {
         let path = manager.get_bookmark(name)?;
         let directory_path = Path::new(&path);
         if Process::is_valid_path(&directory_path) {
-            let os_path = directory_path.as_os_str().to_str().unwrap();
-            print!("{}", os_path);
+            print!("{}", &directory_path.to_str().unwrap());
             Ok(())
         } else {
             Err(format_err!("{} ({}) is invalid directory path", name, path))

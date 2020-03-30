@@ -38,10 +38,11 @@ function bm
   set length (count $argv)
   if test $length -eq 0
     bookmark
-  else if test $length -eq 1; and  test $arvg[1] != "-h" or test $argv[1] != "help"
+  else if test $length -eq 1; and  test $argv[1] != "-h"; and test $argv[1] != "--help"; and test $argv[1] != "help"; and test $argv[1] != "-V"; and test $argv[1] != "--version"
     cd (bookmark $argv)
   else
     bookmark $argv
   end
 end
+
 ```

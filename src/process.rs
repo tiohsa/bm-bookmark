@@ -24,8 +24,10 @@ impl Process {
     pub fn show_list() -> Result<(), Error> {
         let manager = Manager::new();
         let bookmarks = manager.read_bookmarks()?;
-        for bookmark in bookmarks {
-            println!("{}={}", &bookmark.name, &bookmark.path);
+        if let Some(max) = bookmarks.iter().map(|v| v.name.len()).max() {
+            for bookmark in bookmarks {
+                println!("{:<width$} {}", &bookmark.name, &bookmark.path, width = max);
+            }
         }
         Ok(())
     }

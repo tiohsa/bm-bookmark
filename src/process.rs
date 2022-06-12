@@ -1,5 +1,5 @@
 use crate::bookmark::Manager;
-use failure::{format_err, Error};
+use anyhow::{bail, Error};
 use std::path::Path;
 
 pub struct Process {}
@@ -17,7 +17,7 @@ impl Process {
             print!("{}", &directory_path.to_str().unwrap());
             Ok(())
         } else {
-            Err(format_err!("{} ({}) is invalid directory path", name, path))
+            bail!("{} ({}) is invalid directory path", name, path)
         }
     }
 
@@ -39,7 +39,7 @@ impl Process {
             manager.add_bookmark(name, path)?;
             Ok(())
         } else {
-            Err(format_err!("{} ({}) is invalid directory path", name, path))
+            bail!("{} ({}) is invalid directory path", name, path)
         }
     }
 

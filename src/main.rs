@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate clap;
+use anyhow::Error;
 use bookmark::process::Process;
 use clap::{App, Arg, ArgMatches, SubCommand};
-use failure::Error;
 use std::env;
 
 fn main() {

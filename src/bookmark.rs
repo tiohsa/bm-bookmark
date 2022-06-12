@@ -1,5 +1,5 @@
 extern crate serde;
-use failure::{format_err, Error};
+use anyhow::{bail, Error};
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs::File;
@@ -22,7 +22,7 @@ impl Manager {
         if let Some(bookmark) = self.read_bookmarks()?.iter().find(|v| v.name == name) {
             Ok(bookmark.path.clone())
         } else {
-            Err(format_err!("{} is not found.", name))
+            bail!("{} is not found.", name)
         }
     }
 
@@ -32,12 +32,12 @@ impl Manager {
         let bookmark = Bookmark::new(name, abs_path.to_str().unwrap());
         let mut bookmarks = self.read_bookmarks()?;
         if let Some(same_bookmark) = bookmarks.iter().find(|v| v.name == bookmark.name) {
-            Err(format_err!(
+            bail!(
                 "{} is already registered. ({} = {})",
                 same_bookmark.name,
                 same_bookmark.name,
                 same_bookmark.path
-            ))
+            )
         } else {
             bookmarks.push(bookmark);
             self.write_bookmarks(&bookmarks)?;
@@ -52,7 +52,7 @@ impl Manager {
             self.write_bookmarks(&bookmarks)?;
             Ok(())
         } else {
-            Err(format_err!("{} is not found.", name))
+            bail!("{} is not found.", name)
         }
     }
 
